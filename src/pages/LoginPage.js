@@ -12,7 +12,6 @@ import Iconify from '../components/iconify';
 // sections
 import { LoginForm } from '../sections/auth/login';
 
-
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -45,12 +44,11 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
-  const auth = useSelector(state => state.auth)
-  
+  const auth = useSelector((state) => state.auth);
+
   if (auth.authenticate) {
     return <Navigate to={`/dashboard`} />;
   }
- 
 
   return (
     <>
@@ -59,7 +57,6 @@ export default function LoginPage() {
       </Helmet>
 
       <StyledRoot>
-
         {mdUp && (
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
@@ -77,7 +74,9 @@ export default function LoginPage() {
 
             <Typography variant="body2" sx={{ mb: 5 }}>
               Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+              <Link variant="subtitle2" href="/signup">
+                Get started
+              </Link>
             </Typography>
 
             <Stack direction="row" spacing={2}>

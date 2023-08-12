@@ -27,6 +27,9 @@ export default function Courses() {
   const user = useSelector((state) => state.auth.user);
   const course = useSelector((state) => state.course.courses);
   console.log(themes);
+
+  const myThemes = themes.filter((t) => t.level === user.level);
+
   useEffect(() => {
     dispatch(getThemes());
     dispatch(getAllCourses());
@@ -37,7 +40,7 @@ export default function Courses() {
       <Container>
         {user && user.role === 'student' ? (
           <Grid container display="flex" spacing={6} align="center" justifyItems={'space-arround'} mt={4}>
-            {themes.map((theme, index) => (
+            {myThemes.map((theme, index) => (
               <CourseCard key={theme._id} theme={theme} index={index} />
             ))}
           </Grid>

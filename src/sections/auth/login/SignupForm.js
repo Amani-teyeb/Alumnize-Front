@@ -22,10 +22,12 @@ export default function SignupForm() {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [parentName, setParentName] = useState('');
+  const [level, setLevel] = useState('');
   const [error, setError] = useState('');
-
+  const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClick = (e) => {
@@ -35,12 +37,24 @@ export default function SignupForm() {
       firstName,
       lastName,
       email,
+      parentName,
+      level,
+      contactNumber,
       password,
     };
     dispatch(signup(user));
   };
   const [sent, setSent] = React.useState(false);
-
+  const handleLevel = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setLevel(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value : value._id
+    );
+    console.log(event.target.value);
+  };
   const validate = (values) => {
     const errors = required(['firstName', 'lastName', 'email', 'level', 'password'], values);
 
@@ -85,39 +99,93 @@ export default function SignupForm() {
             component={TextField}
             disabled={submitting || sent}
             fullWidth
-            label="Level"
+            label="المستوى الدراسي"
             margin="normal"
             name="level"
+            value={level}
+            onChange={handleLevel}
             required
             select
           >
-            <MenuItem value={'première année'}>première année</MenuItem>
-            <MenuItem value={'deuxième année'}>deuxième année</MenuItem>
-            <MenuItem value={'troisième année'}>troisième année</MenuItem>
+            <MenuItem value={'2 ème année'}>2 ème année</MenuItem>
+            <MenuItem value={'3 ème année'}>3 ème année</MenuItem>
+            <MenuItem value={'4 ème année'}>4 ème année</MenuItem>
+            <MenuItem value={'5 ème année'}>5 ème année</MenuItem>
+            <MenuItem value={'6 ème année'}>6 ème année</MenuItem>
+            <MenuItem value={'7 ème année'}>7 ème année</MenuItem>
+            <MenuItem value={'8 ème année'}>8 ème année</MenuItem>
+            <MenuItem value={'9 ème année'}>9 ème année</MenuItem>
+            <MenuItem value={'1 ère secondaire'}> 1 ère secondaire</MenuItem>
+            <MenuItem value={'2 ème secondaire informatique'}>2 ème secondaire informatique</MenuItem>
+            <MenuItem value={'2 ème secondaire scientifique'}>2 ème secondaire scientifique</MenuItem>
+            <MenuItem value={'2 ème secondaire économie'}>2 ème secondaire économie</MenuItem>
+            <MenuItem value={'2 ème secondaire lettres'}>2 ème secondaire lettres</MenuItem>
+            <MenuItem value={'3 ème secondaire économie'}>3 ème secondaire économie</MenuItem>
+            <MenuItem value={'3 ème secondaire informatique'}>3 ème secondaire informatique</MenuItem>
+            <MenuItem value={'3 ème secondaire math'}>3 ème secondaire math</MenuItem>
+            <MenuItem value={'3 ème secondaire sciences exp'}>3 ème secondaire sciences exp</MenuItem>
+            <MenuItem value={'3 ème secondaire techniques'}>3 ème secondaire techniques</MenuItem>
+            <MenuItem value={'3 ème secondaire lettres'}>3 ème secondaire lettres</MenuItem>
+            <MenuItem value={'Bac économie'}>Bac économie</MenuItem>
+            <MenuItem value={'Bac sciences exp'}>Bac sciences exp</MenuItem>
+            <MenuItem value={'Bac informatique'}>Bac informatique</MenuItem>
+            <MenuItem value={'Bac lettres'}>Bac lettres</MenuItem>
+            <MenuItem value={'Bac mathématiques'}>Bac mathématiques</MenuItem>
+            <MenuItem value={'Bac techniques'}>Bac techniques</MenuItem>
+            <MenuItem value={'Formation Langues'}>Formation Langues</MenuItem>
           </Field>
+          <TextField
+            fullWidth
+            required
+            name="parentName"
+            label="اسم الولي "
+            value={parentName}
+            type="text"
+            margin="normal"
+            onChange={(e) => setParentName(e.target.value)}
+          />
 
           <TextField
             fullWidth
             required
-            name="email"
-            label="Email address"
-            value={email}
+            name="contactNumber"
+            label="رقم الهاتف"
+            value={contactNumber}
             type="text"
             margin="normal"
+            onChange={(e) => setContactNumber(e.target.value)}
+          />
+
+          <TextField
+            name="email"
+            required
+            label="البريد الالكتروني"
+            fullWidth
+            margin="normal"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             fullWidth
             required
             name="password"
-            label="Password"
-            type="password"
+            label="كلمة المرور"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <FormButton sx={{ mt: 3, mb: 2 }} color="secondary" onClick={handleClick} fullWidth>
-            Signup
+            تسجيل
           </FormButton>
         </Box>
       )}
