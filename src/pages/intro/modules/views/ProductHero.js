@@ -17,12 +17,22 @@ export default function ProductHero() {
       <Typography color="inherit" align="center" variant="h3" marked="center" sx={{ mt: 8 }}>
         H-tag Academy
       </Typography>
-      <Typography color="inherit" align="center" variant="h5" sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}>
-        study from home with H-tag Academy programs.
+      <Typography color="inherit" align="center" variant="h5" sx={{ mb: 6, mt: { sx: 4, sm: 10 } }}>
+        باش تتهنى على قراية صغيرك على عينيك
       </Typography>
-      <Button color="secondary" variant="contained" size="large" component="a" href="/signup" sx={{ minWidth: 200 }}>
-        Signup
+      <Button
+        style={{
+          borderRadius: 35,
+          backgroundColor: '#21b6ae',
+          padding: '15px 50px',
+          fontSize: '25px',
+        }}
+        href="/signup"
+        variant="contained"
+      >
+        التسجيل
       </Button>
+
       <></>
 
       {/* <Typography variant="body2" color="inherit">

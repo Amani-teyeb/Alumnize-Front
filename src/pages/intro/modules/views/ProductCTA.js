@@ -29,18 +29,40 @@ function ProductCTA() {
               display: 'flex',
               justifyContent: 'center',
               bgcolor: 'warning.main',
-              py: 8,
+              py: 15,
               px: 3,
             }}
           >
-            <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400 }}>
-              <Typography variant="h2" component="h2" gutterBottom>
-                Receive offers
+            <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 500 }}>
+              <Typography variant="h2" component="h2" gutterBottom ml="40px" mb="40px">
+                تعرف على عروضنا وبرامجنا
               </Typography>
-              <Typography variant="h5">Try the best educational offers with H-tag Academy.</Typography>
-              <TextField noBorder placeholder="Your email" variant="standard" sx={{ width: '100%', mt: 3, mb: 2 }} />
-              <Button type="submit" color="primary" variant="contained" sx={{ width: '100%' }}>
-                Keep me updated
+
+              <Button
+                type="submit"
+                style={{
+                  borderRadius: 35,
+                  backgroundColor: '#80ced6',
+                  padding: '12px 36px',
+                  fontSize: '20px',
+                }}
+                variant="contained"
+                sx={{ width: '60%', ml: '100px', mb: '20px' }}
+              >
+                روزنامة الاوقات لكل المستويات
+              </Button>
+              <Button
+                type="submit"
+                style={{
+                  borderRadius: 35,
+                  backgroundColor: '#80ced6',
+                  padding: '12px 36px',
+                  fontSize: '20px',
+                }}
+                variant="contained"
+                sx={{ width: '60%', ml: '100px' }}
+              >
+                افضل الاسعار
               </Button>
             </Box>
           </Box>

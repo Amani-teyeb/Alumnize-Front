@@ -20,7 +20,7 @@ function ProductSmokingHero() {
         }}
       >
         <Typography variant="h4" component="span">
-          Got any questions? Need help?
+          لمزيد من الاستفسار 003 990 98
         </Typography>
       </Button>
       <Typography variant="subtitle1" sx={{ my: 3 }}>

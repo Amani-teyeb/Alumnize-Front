@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // @mui
 import { Link, Stack, IconButton, InputAdornment, MenuItem, TextField, Checkbox } from '@mui/material';
@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import { Field, Form, FormSpy } from 'react-final-form';
 import Iconify from '../../../components/iconify';
 import { email, required } from '../../../pages/intro/modules/form/validation';
+
 import FormButton from '../../../pages/intro/modules/form/FormButton';
 import FormFeedback from '../../../pages/intro/modules/form/FormFeedback';
 import { signup } from '../../../Redux/actions';
@@ -26,9 +27,19 @@ export default function SignupForm() {
   const [password, setPassword] = useState('');
   const [parentName, setParentName] = useState('');
   const [level, setLevel] = useState('');
+  const [moy, setMoy] = useState('');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
+
+  const [sent, setSent] = React.useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
+
+  const auth = useSelector((state) => state.auth);
+
+  if (auth.authenticate) {
+    return <Navigate to={`/dashboard`} />;
+  }
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -44,7 +55,7 @@ export default function SignupForm() {
     };
     dispatch(signup(user));
   };
-  const [sent, setSent] = React.useState(false);
+
   const handleLevel = (event) => {
     const {
       target: { value },
@@ -151,9 +162,19 @@ export default function SignupForm() {
             name="contactNumber"
             label="رقم الهاتف"
             value={contactNumber}
-            type="text"
+            type="number"
             margin="normal"
             onChange={(e) => setContactNumber(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            required
+            name="moy"
+            label=" معدل السنة الفارطة"
+            value={moy}
+            type="number"
+            margin="normal"
+            onChange={(e) => setMoy(e.target.value)}
           />
 
           <TextField

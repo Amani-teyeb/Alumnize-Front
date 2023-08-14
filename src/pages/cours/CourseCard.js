@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
@@ -8,7 +7,6 @@ import { Navigate } from 'react-router-dom';
 
 // utils
 //
-
 
 // ----------------------------------------------------------------------
 
@@ -41,41 +39,39 @@ CourseCard.propTypes = {
 };
 
 export default function CourseCard({ theme, index }) {
-  const { name, image, slug} = theme;
- 
+  const { name, image, slug } = theme;
 
   return (
-   
-    <Grid item  md={3} mb={5} >
-      <Card sx={{ position: 'relative'}}  >
+    <Grid item md={3} mb={5}>
+      <Card sx={{ position: 'relative' }}>
         <StyledCardMedia
-         sx={{
+          sx={{
             pt: 'calc(100% * 3 / 5)',
             '&:after': {
               top: 0,
               position: 'absolute',
-              bgcolor: "#ECBDE7"
-            }
-        }}>
+              bgcolor: '#ECBDE7',
+            },
+          }}
+        >
           <StyledCover alt={name} src={image} />
         </StyledCardMedia>
 
         <CardContent
-          
           sx={{
             pt: 1,
-            bgcolor:'#FAEDF9'
+            bgcolor: '#FAEDF9',
           }}
         >
-
           <StyledTitle
             color="inherit"
             variant="subtitle2"
             underline="hover"
-            href= {`courses/${slug}`}
+            href={`courses/${slug}`}
             sx={{
-                typography: 'h6', height: 30,
-                color: 'blue',    
+              typography: 'h6',
+              height: 30,
+              color: 'blue',
             }}
           >
             {name}

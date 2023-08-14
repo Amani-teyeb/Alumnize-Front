@@ -21,10 +21,22 @@ function AppAppBar() {
   return (
     <div>
       <AppBar position="fixed" sx={{ mt: '20px' }}>
-        <Toolbar sx={{ justifyContent: 'space-arround' }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ height: '120px', width: '120px', mt: '40px' }}>
             <img alt="Remy Sharp" src={logo} />
           </Box>
+          <Button
+            style={{
+              borderRadius: 35,
+              backgroundColor: '#21b6ae',
+              padding: '12px 36px',
+              fontSize: '18px',
+            }}
+            variant="contained"
+            href="/login"
+          >
+            الدخول
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

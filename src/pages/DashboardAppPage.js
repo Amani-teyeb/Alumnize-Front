@@ -25,7 +25,7 @@ export default function DashboardAppPage() {
     <>
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          H-tag academy
         </Typography>
 
         <Grid container spacing={3} mb={5}>
@@ -98,7 +98,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8} mr={10}>
-            <AppTasks
+            {/* <AppTasks
               title="Tasks"
               list={[
                 { id: '1', label: 'Create FireStone Logo' },
@@ -107,7 +107,7 @@ export default function DashboardAppPage() {
                 { id: '4', label: 'Scoping & Estimations' },
                 { id: '5', label: 'Sprint Showcase' },
               ]}
-            />
+            /> */}
           </Grid>
           <MyCalendar />
         </Grid>
