@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ScrollableFeed from 'react-scrollable-feed';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -54,17 +55,18 @@ const MyChats = ({ fetchAgain }) => {
           marginBottom: 2,
         }}
       >
-        <> My Chats</>
-        <GroupChatModal>
-          <Button
-            variant="outlined"
-            display="flex"
-            fontSize={{ base: '17px', md: '10px', lg: '17px' }}
-            startIcon={<AddIcon />}
-          >
-            New Group Chat
-          </Button>
-        </GroupChatModal>
+        {auth && auth.role === 'teacher' ? (
+          <GroupChatModal>
+            <Button
+              variant="outlined"
+              display="flex"
+              fontSize={{ base: '17px', md: '10px', lg: '17px' }}
+              startIcon={<AddIcon />}
+            >
+              <Typography variant="h6"> اضافة مجموعة جديدة</Typography>
+            </Button>
+          </GroupChatModal>
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -77,7 +79,7 @@ const MyChats = ({ fetchAgain }) => {
           overflowy: 'scroll',
         }}
       >
-        <Stack overflowy="scroll">
+        <ScrollableFeed>
           {chats.length > 0 ? (
             chats.map((chat) => (
               <Box
@@ -103,7 +105,7 @@ const MyChats = ({ fetchAgain }) => {
           ) : (
             <></>
           )}
-        </Stack>
+        </ScrollableFeed>
       </Box>
     </Box>
   );

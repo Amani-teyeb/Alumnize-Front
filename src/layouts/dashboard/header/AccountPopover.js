@@ -1,28 +1,25 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover, Link } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // mocks_
 import account from '../../../_mock/account';
-import {Logout} from '../../../Redux/actions/auth.actions'
-
+import { Logout } from '../../../Redux/actions/auth.actions';
+import EditUserModal from '../../../components/EditUserModal';
+import EditTeacherModal from '../../../components/EditTeacherModal';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'صفحة الاستقبال',
     icon: 'eva:home-fill',
   },
   {
-    label: 'Profile',
+    label: 'إعدادات',
     icon: 'eva:person-fill',
-  },
-  {
-    label: 'Settings',
-    icon: 'eva:settings-2-fill',
   },
 ];
 
@@ -30,8 +27,10 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const history = useNavigate();
+
+  const auth = useSelector((state) => state.auth.user);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -42,18 +41,16 @@ export default function AccountPopover() {
   };
 
   const handleLogout = () => {
-    
-    dispatch(Logout())
+    dispatch(Logout());
     // history('/login')
-  }
-  const navigate = useNavigate()
+  };
+  const navigate = useNavigate();
 
-  useEffect(() =>{
-    if(!localStorage.getItem('token')){
-      navigate('/login')
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
     }
-  }, [Logout])
-
+  }, [Logout]);
 
   return (
     <>
@@ -74,9 +71,8 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={account.photoURL} alt="img" />
       </IconButton>
-
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -98,27 +94,32 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {auth.firstName} {auth.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {auth.email}
           </Typography>
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
+          <Link href="/dashboard/app" style={{ textDecoration: 'none' }}>
+            <MenuItem key={'الاستقبال'}>صفحة الاستقبال</MenuItem>
+          </Link>
+          {auth && auth.role === 'teacher' ? (
+            <EditTeacherModal>
+              <Link style={{ textDecoration: 'none' }}>
+                <MenuItem key={'إعدادات'}>إعدادات </MenuItem>
+              </Link>
+            </EditTeacherModal>
+          ) : null}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleLogout} sx={{ m: 1 }} >
-          Logout
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
+          خروج
         </MenuItem>
       </Popover>
     </>

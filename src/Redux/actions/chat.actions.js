@@ -5,8 +5,7 @@ import axiosInstance from '../../helpers/axios';
 
 const token = window.localStorage.getItem('token');
 
-export const getFriends = (search) => {
-  return async (dispatch) => {
+export const getFriends = (search) => async (dispatch) => {
     dispatch({ type: chatConstants.GET_FRIENDS_REQUEST });
     const res = await axiosInstance.get(`/getUserSearch?search=${search}`);
     if (res.status === 200) {
@@ -18,10 +17,8 @@ export const getFriends = (search) => {
       dispatch({ type: chatConstants.GET_FRIENDS_FAILURE });
     }
   };
-};
 
-export const accessChat = (userId) => {
-  return async (dispatch) => {
+export const accessChat = (userId) => async (dispatch) => {
     dispatch({ type: chatConstants.ACCESS_CHAT_REQUEST });
     const res = await axiosInstance.post(`/chat`, { userId });
     if (res.status === 200) {
@@ -35,10 +32,8 @@ export const accessChat = (userId) => {
       dispatch({ type: chatConstants.ACCESS_CHAT_FAILURE });
     }
   };
-};
 
-export const fetchChats = () => {
-  return async (dispatch) => {
+export const fetchChats = () => async (dispatch) => {
     dispatch({ type: chatConstants.FETCH_CHAT_REQUEST });
     const res = await axiosInstance.get(`/chat`);
     if (res.status === 200) {
@@ -50,10 +45,8 @@ export const fetchChats = () => {
       dispatch({ type: chatConstants.FETCH_CHAT_FAILURE });
     }
   };
-};
 
-export const accessChatById = (chatId) => {
-  return async (dispatch) => {
+export const accessChatById = (chatId) => async (dispatch) => {
     dispatch({ type: chatConstants.ACCESS_CHATBYID_REQUEST });
     const res = await axiosInstance.get(`/chat/${chatId}`);
     if (res.status === 200) {
@@ -66,10 +59,8 @@ export const accessChatById = (chatId) => {
       dispatch({ type: chatConstants.ACCESS_CHATBYID_FAILURE });
     }
   };
-};
 
-export const createGroup = ({ groupChatName, selectedUsers }) => {
-  return async (dispatch) => {
+export const createGroup = ({ groupChatName, selectedUsers }) => async (dispatch) => {
     dispatch({ type: chatConstants.CREATE_GROUP_REQUEST });
     const res = await axiosInstance.post(`/chat/group`, {
       name: groupChatName,
@@ -84,10 +75,8 @@ export const createGroup = ({ groupChatName, selectedUsers }) => {
       dispatch({ type: chatConstants.CREATE_GROUP_FAILURE });
     }
   };
-};
 
-export const updateGroupName = ({ groupChatName, selectchatId }) => {
-  return async (dispatch) => {
+export const updateGroupName = ({ groupChatName, selectchatId }) => async (dispatch) => {
     dispatch({ type: chatConstants.UPDATE_GROUP_NAME_REQUEST });
     const res = await axiosInstance.put(`/chat/rename`, {
       chatId: selectchatId,
@@ -103,9 +92,7 @@ export const updateGroupName = ({ groupChatName, selectchatId }) => {
       dispatch({ type: chatConstants.UPDATE_GROUP_NAME_FAILURE });
     }
   };
-};
-export const addUserToGroup = ({ selectchatId, userId }) => {
-  return async (dispatch) => {
+export const addUserToGroup = ({ selectchatId, userId }) => async (dispatch) => {
     dispatch({ type: chatConstants.ADD_USER_REQUEST });
     const res = await axiosInstance.put(`/chat/groupadd`, {
       chatId: selectchatId,
@@ -121,10 +108,8 @@ export const addUserToGroup = ({ selectchatId, userId }) => {
       dispatch({ type: chatConstants.ADD_USER_FAILURE });
     }
   };
-};
 
-export const removeUserFromGroup = ({ selectchatId, userId }) => {
-  return async (dispatch) => {
+export const removeUserFromGroup = ({ selectchatId, userId }) => async (dispatch) => {
     dispatch({ type: chatConstants.REMOVE_USER_REQUEST });
     const res = await axiosInstance.put(`/chat/groupremove`, {
       chatId: selectchatId,
@@ -140,10 +125,8 @@ export const removeUserFromGroup = ({ selectchatId, userId }) => {
       dispatch({ type: chatConstants.REMOVE_USER_FAILURE });
     }
   };
-};
 
-export const sendNewMessage = ({ chatId, newMessage }) => {
-  return async (dispatch) => {
+export const sendNewMessage = ({ chatId, newMessage }) => async (dispatch) => {
     dispatch({ type: chatConstants.SEND_MESSAGE_REQUEST });
     const res = await axiosInstance.post(`/message`, {
       content: newMessage,
@@ -154,16 +137,22 @@ export const sendNewMessage = ({ chatId, newMessage }) => {
         type: chatConstants.SEND_MESSAGE_SUCCESS,
         payload: res.data,
       });
-      dispatch(getMessages(chatId));
-    } else {
-      dispatch({ type: chatConstants.SEND_MESSAGE_FAILURE });
+      return res.data;
     }
+    dispatch({ type: chatConstants.SEND_MESSAGE_FAILURE });
+    return null;
   };
-};
 
-export const getMessages = (chatId) => {
+export const receivedMessage = (newMessageReceived) => async (dispatch) => {
+    dispatch({
+      type: chatConstants.RECIEVE_MESSAGE_SUCCESS,
+      payload: newMessageReceived,
+    });
+  };
+
+export const getMessages = (chatId) => 
   // console.log(chatId);
-  return async (dispatch) => {
+   async (dispatch) => {
     dispatch({ type: chatConstants.GET_MESSAGES_REQUEST });
     const res = await axiosInstance.get(`/message/${chatId}`);
     if (res.status === 200) {
@@ -174,5 +163,5 @@ export const getMessages = (chatId) => {
     } else {
       dispatch({ type: chatConstants.GET_MESSAGES_FAILURE });
     }
-  };
-};
+  }
+;

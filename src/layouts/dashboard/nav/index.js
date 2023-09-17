@@ -16,6 +16,7 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
+import navConfigTeacher from './teacherConfig';
 
 // ----------------------------------------------------------------------
 
@@ -75,8 +76,13 @@ export default function Nav({ openNav, onCloseNav }) {
           </StyledAccount>
         </Link>
       </Box>
-
-      <NavSection sx={{ color: 'white' }} data={navConfig} />
+      <>
+        {user && user.role === 'student' ? (
+          <NavSection sx={{ color: 'white' }} data={navConfig} />
+        ) : (
+          <NavSection sx={{ color: 'white' }} data={navConfigTeacher} />
+        )}
+      </>
 
       {/* liste des donnés de Course ....
           data nom de la liste

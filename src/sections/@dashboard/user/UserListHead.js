@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
+import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel, Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +61,8 @@ export default function UserListHead({
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <Typography variant="h5"> {headCell.label}</Typography>
+
               {orderBy === headCell.id ? (
                 <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
               ) : null}

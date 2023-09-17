@@ -34,12 +34,12 @@ const StyledCover = styled('img')({
 
 // ----------------------------------------------------------------------
 
-CourseCard.propTypes = {
+WishlistCard.propTypes = {
   theme: PropTypes.object.isRequired,
   index: PropTypes.number,
 };
 
-export default function CourseCard({ theme, add, enter }) {
+export default function WishlistCard({ theme }) {
   const { _id, name, image } = theme;
   const dispatch = useDispatch();
 
@@ -81,7 +81,23 @@ export default function CourseCard({ theme, add, enter }) {
           >
             {name}
           </StyledTitle>
-          <button style={{ width: '100%' }}>
+
+          <button style={{ width: '80%' }}>
+            <StyledTitle
+              color="inherit"
+              variant="subtitle2"
+              underline="hover"
+              href={`courses/${_id}`}
+              sx={{
+                typography: 'h6',
+                height: 30,
+                color: 'black',
+              }}
+            >
+              الدخول
+            </StyledTitle>
+          </button>
+          <button style={{ width: '80%' }}>
             <StyledTitle
               color="inherit"
               variant="subtitle2"
@@ -95,7 +111,7 @@ export default function CourseCard({ theme, add, enter }) {
                 color: 'black',
               }}
             >
-              {add}
+              الغاء التسجيل
             </StyledTitle>
           </button>
         </CardContent>

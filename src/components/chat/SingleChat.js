@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { getSender } from '../../Config/ChatLogics';
 import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal';
-import { getMessages, sendNewMessage } from '../../Redux/actions';
+import { getMessages, sendNewMessage, receivedMessage } from '../../Redux/actions';
 import './SingleChat.css';
 import ScrollableChat from './ScrollableChat';
 
@@ -20,12 +20,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const myMessage = useSelector((state) => state.chat.messages);
   const dispatch = useDispatch();
 
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [newMessage, setNewMessage] = useState();
-  const [istyping, setIsTyping] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
+
+  console.log(chats)
 
   const defaultOptions = {
     loop: true,
@@ -35,38 +34,24 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
+  
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit('setup', auth);
+    socket.emit('setup', chats);
     socket.on('connected', () => setSocketConnected(true));
-    socket.on('typing', () => setIsTyping(true));
-    socket.on('stop typing', () => setIsTyping(false));
-
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    socket.on('message recieved', (newMessageRecieved) => {
-      if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
-        selectedChatCompare._id !== newMessageRecieved.chat._id
-      ) {
-        // if (!notification.includes(newMessageRecieved)) {
-        //   setNotification([newMessageRecieved, ...notification]);
-        //   setFetchAgain(!fetchAgain);
-        // }
-      } else {
-        setMessages([...messages, newMessageRecieved]);
-      }
+    socket.on('message received', (newMessageReceived) => {
+      dispatch(receivedMessage(newMessageReceived));
     });
-  });
+  }, [chats, dispatch]);
 
-  const sendMessage = (event) => {
+  
+  const sendMessage = async (event) => {
     const chatId = selectedChat._id;
     if (event.key === 'Enter' && newMessage) {
-      socket.emit('stop typing', selectedChat._id);
-      dispatch(sendNewMessage({ chatId, newMessage }));
       setNewMessage('');
+      dispatch(sendNewMessage({ chatId, newMessage })).then(newMsg => {
+        socket.emit('new message', newMsg);
+      });
     }
   };
 
@@ -77,15 +62,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setTyping(true);
       socket.emit('typing', selectedChat._id);
     }
-    const lastTypingTime = new Date().getTime();
-    const timerLength = 3000;
-    setTimeout(() => {
-      const timeNow = new Date().getTime();
-      const timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && typing) {
-        setTyping(false);
-      }
-    }, timerLength);
   };
 
   return (
@@ -127,7 +103,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               <ScrollableChat myMessage={myMessage} />
             </div>
             <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-              {istyping ? <div>Loading</div> : <></>}
               <TextField
                 id="outlined-basic"
                 variant="outlined"

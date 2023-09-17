@@ -7,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import { getFriends, accessChat } from '../../../Redux/actions';
 import { ChatLoading } from '../ChatLoading';
@@ -42,11 +43,13 @@ const SideDrawer = () => {
   };
   return (
     <Box>
-      <Tooltip title="Search Users to Chat" placement="left-end">
-        <Button variant="contained" startIcon={<SearchIcon />} onClick={handleOpenDialog}>
-          Search Friend
-        </Button>
-      </Tooltip>
+      {auth && auth.role === 'teacher' ? (
+        <Tooltip title="Search Users to Chat" placement="left-end">
+          <Button variant="contained" startIcon={<SearchIcon />} onClick={handleOpenDialog}>
+            <Typography variant="h6">اضافة تلميذ</Typography>
+          </Button>
+        </Tooltip>
+      ) : null}
       <Dialog
         fullWidth={fullWidth}
         open={opend}

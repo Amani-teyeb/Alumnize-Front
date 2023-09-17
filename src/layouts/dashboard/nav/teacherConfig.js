@@ -6,7 +6,7 @@ import SvgColor from '../../../components/svg-color';
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
-const navConfig = [
+const navConfigTeacher = [
   {
     icon: icon('ic_analytics'),
     title: 'صفحة الاستقبال',
@@ -18,29 +18,24 @@ const navConfig = [
     path: '/dashboard/user',
     icon: icon('ic_user'),
   },
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: icon('ic_cart'),
-  // },
 
   {
-    title: 'تسجيل في الدروس',
+    title: ' اضافة درس',
     path: '/dashboard/cours',
     icon: icon('ic_blog'),
   },
 
-  {
-    title: 'دروسي',
-    path: '/dashboard/wishlist',
-    icon: icon('ic_lock'),
-  },
+  // {
+  //   title: 'الدروس',
+  //   path: '/dashboard/products',
+  //   icon: icon('ic_lock'),
+  // },
 
-  {
-    title: 'لغات',
-    path: '/dashboard/formation',
-    icon: icon('ic_lock'),
-  },
+  // {
+  //   title: 'Formation',
+  //   path: '/dashboard/formation',
+  //   icon: icon('ic_lock'),
+  // },
 ];
 
-export default navConfig;
+export default navConfigTeacher;

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // mock
 import courses from '../../_mock/course';
-import { getAllCourses, getThemes } from '../../Redux/actions';
+import { getAllCourses, getThemes, getUserWishlist } from '../../Redux/actions';
 import CourseCard from './CourseCard';
 import TeacherCourse from './TeacherCourse';
 
@@ -26,13 +26,16 @@ export default function Courses() {
   const themes = useSelector((state) => state.theme.themes);
   const user = useSelector((state) => state.auth.user);
   const course = useSelector((state) => state.course.courses);
-  console.log(themes);
+  const wishlist = useSelector((state) => state.auth.wishlist);
+
+  console.log(wishlist);
 
   const myThemes = themes.filter((t) => t.level === user.level);
 
   useEffect(() => {
     dispatch(getThemes());
     dispatch(getAllCourses());
+    dispatch(getUserWishlist());
   }, []);
 
   return (
@@ -41,7 +44,7 @@ export default function Courses() {
         {user && user.role === 'student' ? (
           <Grid container display="flex" spacing={6} align="center" justifyItems={'space-arround'} mt={4}>
             {myThemes.map((theme, index) => (
-              <CourseCard key={theme._id} theme={theme} index={index} />
+              <CourseCard key={theme._id} theme={theme} index={index} add="تسجيل" />
             ))}
           </Grid>
         ) : (

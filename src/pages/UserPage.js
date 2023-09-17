@@ -40,16 +40,16 @@ import USERLIST from '../_mock/user';
 export default function UserPage() {
   const auth = useSelector((state) => state.auth.user);
   const [fetchAgain, setFetchAgain] = useState(false);
+
   return (
     <>
       <Helmet>
         <title> User | Minimal UI </title>
       </Helmet>
-
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Friends
+            دردشة
           </Typography>
           {auth && <SideDrawer />}
         </Stack>
@@ -59,7 +59,7 @@ export default function UserPage() {
               display: 'flex',
               justifyContent: 'space-between',
               width: '100 %',
-              height: '94vh',
+              height: '70vh',
               p: '10px',
               backgroundColor: '#f0f8ff',
             }}

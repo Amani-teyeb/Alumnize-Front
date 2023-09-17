@@ -15,6 +15,7 @@ import SignupPage from './pages/SignupPage';
 import PrivateRoute from './HOC/PrivateRoutes';
 import { CoursePage } from './pages/cours/CoursePage';
 import { CourseDetails } from './pages/cours/CourseDetails';
+import WishList from './pages/cours/WishList';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +39,8 @@ export default function Router() {
             { path: 'cours', element: <Cours /> },
             { path: 'formation', element: <Formation /> },
             { path: 'blog', element: <BlogPage /> },
-            { path: 'courses/:slug', element: <CoursePage />, index: true },
+            { path: 'wishlist', element: <WishList /> },
+            { path: 'courses/:_id', element: <CoursePage />, index: true },
             { path: 'courses/courseDetails/:id', element: <CourseDetails /> },
           ],
         },

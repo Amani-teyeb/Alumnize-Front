@@ -4,7 +4,29 @@ import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // @mui
-import { Card, Table, Stack, Paper, TextField, Button, Popover, Box, Checkbox, TableRow, MenuItem, TableBody, TableCell, Container, FormControlLabel, FormControl, Typography, IconButton, TableContainer, TablePagination, InputLabel } from '@mui/material';
+import {
+  Card,
+  Table,
+  Stack,
+  Paper,
+  TextField,
+  Button,
+  Popover,
+  Box,
+  Checkbox,
+  TableRow,
+  MenuItem,
+  TableBody,
+  TableCell,
+  Container,
+  FormControlLabel,
+  FormControl,
+  Typography,
+  IconButton,
+  TableContainer,
+  TablePagination,
+  InputLabel,
+} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { SettingsRemote } from '@mui/icons-material';
 // dialog
@@ -12,7 +34,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import FileUpload from "react-mui-fileuploader"
+import FileUpload from 'react-mui-fileuploader';
 
 // components
 import Label from '../../components/label';
@@ -22,18 +44,16 @@ import Scrollbar from '../../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 
 // mock
-import USERLIST from '../../_mock/user'
-import { AddCourse, getAllCourses } from '../../Redux/actions';
-
-
-
+import USERLIST from '../../_mock/user';
+import { AddCourse, deleteCourse, getAllCourses } from '../../Redux/actions';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'level', label: 'Level', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false },
-  { id: 'description', label: 'Description', alignRight: false },
+  { id: 'العنوان', label: 'العنوان', alignRight: false },
+  { id: 'المستوى', label: 'المستوى', alignRight: false },
+  { id: 'تاريخ التنزيل', label: 'تاريخ التنزيل', alignRight: false },
+  { id: 'الدرس', label: 'الدرس', alignRight: false },
   { id: '' },
 ];
 
@@ -69,11 +89,12 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function TeacherCourse() {
-
-  const dispatch = useDispatch()
-  const courses = useSelector(state => state.course.courses)
-  const themes = useSelector(state => state.theme.themes)
-
+  const dispatch = useDispatch();
+  const allcourses = useSelector((state) => state.course.courses);
+  const auth = useSelector((state) => state.auth.user);
+  const courses = allcourses.filter((e) => e.createdBy === auth._id);
+  console.log(courses);
+  const themes = useSelector((state) => state.theme.themes);
 
   const [open, setOpen] = useState(null);
 
@@ -91,22 +112,14 @@ export default function TeacherCourse() {
 
   // .................................................................
 
-  const [opend, setOpend] = useState(false)
+  const [opend, setOpend] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
-  const [fileToUpload, setFileToUpload] = useState()
-  const [teme, setTeme] = useState('')
-  const [level, setLevel] = useState('')
-  const [titre, setTitre] = useState('')
-  const [description, setDescription] = useState('')
-
-  const LevelTab = [
-    "première année",
-    "deuxième année",
-    "troisième année",
-    "Quatrième année",
-    "Cinquième année",
-    "sixième année"
-  ]
+  const [fileToUpload, setFileToUpload] = useState();
+  const [teme, setTeme] = useState('');
+  const [level, setLevel] = useState('');
+  const [titre, setTitre] = useState('');
+  const [description, setDescription] = useState('');
+  const [group, setGroup] = useState('');
 
   // .................................................................
   const handleOpenMenu = (event) => {
@@ -128,9 +141,17 @@ export default function TeacherCourse() {
       const newSelecteds = USERLIST.map((n) => n.name);
       setSelected(newSelecteds);
       return;
-
     }
     setSelected([]);
+  };
+  const handleGroup = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setGroup(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value : value._id
+    );
   };
 
   const handleClick = (event, name) => {
@@ -169,23 +190,23 @@ export default function TeacherCourse() {
   const isNotFound = !filteredUsers.length && !!filterName;
   // ..........................................................................Dialog_Functions
   const handleOpenDialog = () => {
-    setOpend(true)
-  }
+    setOpend(true);
+  };
   const handleCloseDialog = () => {
-    setOpend(false)
-  }
+    setOpend(false);
+  };
   const handleSubmitDialog = () => {
     const form = new FormData();
     form.append('titre', titre);
+    form.append('group', group);
     form.append('description', description);
     form.append('level', level);
     form.append('theme', teme);
     form.append('url', fileToUpload);
 
-    dispatch(AddCourse(form))
-    setOpend(false)
-
-  }
+    dispatch(AddCourse(form));
+    setOpend(false);
+  };
   // const handleFileChange = (event) => {
   //   // Update chosen files
   //   setFileToUpload(event.target.file[0])
@@ -198,7 +219,7 @@ export default function TeacherCourse() {
     } = event;
     setLevel(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value._id,
+      typeof value === 'string' ? value.split(',') : value._id
     );
   };
   const handleTheme = (event, theme) => {
@@ -207,18 +228,16 @@ export default function TeacherCourse() {
     } = event;
     setTeme(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === 'string' ? value.split(',') : value
     );
-    console.log(theme.name)
+    console.log(theme.name);
   };
   const handleFilesChange = (file) => {
     // Update chosen files
-    setFileToUpload(file[0])
-    console.log(file[0])
+    setFileToUpload(file[0]);
+    console.log(file[0]);
   };
-  const[age, setAge] = useState('')
-
-
+  const [age, setAge] = useState('');
 
   return (
     <>
@@ -229,13 +248,15 @@ export default function TeacherCourse() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            الدروس
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenDialog}>
-            New Course
+            {/* <span style={{ fontSize: 'h4' }}>اضافة درس</span> */}
+            <Typography variant="h5" gutterBottom>
+              اضافة درس
+            </Typography>
           </Button>
         </Stack>
-
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
@@ -252,34 +273,52 @@ export default function TeacherCourse() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody key={courses._id}>
-                  {courses.length > 0 ? courses.map((course) => {
+                  {courses.length > 0
+                    ? courses.map((course) => {
+                        const selectedUser = selected.indexOf(titre) !== -1;
 
-                    const selectedUser = selected.indexOf(titre) !== -1;
+                        return (
+                          <TableRow hover key={course.titre} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                            <TableCell padding="checkbox">
+                              <Checkbox />
+                            </TableCell>
 
-                    return (
-                      <TableRow hover key={course.titre} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox />
-                        </TableCell>
+                            <TableCell component="th" scope="row" padding="none">
+                              <Stack>
+                                <Typography variant="subtitle2" noWrap>
+                                  {course.titre}
+                                </Typography>
+                              </Stack>
+                            </TableCell>
+                            <TableCell align="left">{course.level}</TableCell>
+                            <TableCell align="left">{course.createdAt}</TableCell>
+                            <TableCell align="left">
+                              {/* <iframe
+                                src={course.url}
+                                id={course._id}
+                                title={course.titre}
+                                width="80%"
+                                autoPlay="false"
+                              /> */}
+                              <iframe
+                                width="260"
+                                height="115"
+                                src={course.url}
+                                title={course.titre}
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                              />
+                            </TableCell>
 
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack >
-                            <Typography variant="subtitle2" noWrap>
-                              {course.level}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-                        <TableCell align="left">{course.titre}</TableCell>
-                        <TableCell align="left">{course.description}</TableCell>
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }) : null}
+                            <TableCell align="right">
+                              <IconButton size="large" onClick={() => dispatch(deleteCourse({ courseId: course._id }))}>
+                                <Iconify icon={'eva:trash-2-outline'} sx={{ color: 'error.main' }} />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
+                    : null}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
@@ -355,7 +394,6 @@ export default function TeacherCourse() {
         </MenuItem>
       </Popover>
 
-
       <Dialog
         fullWidth={fullWidth}
         open={opend}
@@ -363,12 +401,8 @@ export default function TeacherCourse() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-
-        <DialogTitle id="alert-dialog-title">
-          {"Add your new course"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{'Add your new course'}</DialogTitle>
         <DialogContent>
-
           <Box
             noValidate
             component="form"
@@ -376,28 +410,15 @@ export default function TeacherCourse() {
               display: 'flex',
               flexDirection: 'column',
               m: 'auto',
-
-
             }}
           >
-
             <TextField
               id="filled-basic"
-              label="Filled"
+              label="title"
               variant="filled"
               value={titre}
               onChange={(e) => setTitre(e.target.value)}
             />
-            <TextField
-              id="filled-basic"
-              label="Filled"
-              variant="filled"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-
-
-
             <FormControl sx={{ mt: 2, maxWidth: 'xl' }}>
               <InputLabel htmlFor="max-width">Level</InputLabel>
               <Select
@@ -406,45 +427,78 @@ export default function TeacherCourse() {
                 inputProps={{
                   name: 'max-width',
                   id: 'max-width',
-                  defaultValue: "level"
+                  defaultValue: 'level',
                 }}
                 value={level}
                 onChange={handleLevel}
               >
-                {
-                  LevelTab.map((item) => (
-                    <MenuItem key={item} value={item}>{item}</MenuItem>
-                  )
-                  )
-
-                }
-
+                <MenuItem value={'2 ème année'}>2 ème année</MenuItem>
+                <MenuItem value={'3 ème année'}>3 ème année</MenuItem>
+                <MenuItem value={'4 ème année'}>4 ème année</MenuItem>
+                <MenuItem value={'5 ème année'}>5 ème année</MenuItem>
+                <MenuItem value={'6 ème année'}>6 ème année</MenuItem>
+                <MenuItem value={'7 ème année'}>7 ème année</MenuItem>
+                <MenuItem value={'8 ème année'}>8 ème année</MenuItem>
+                <MenuItem value={'9 ème année'}>9 ème année</MenuItem>
+                <MenuItem value={'1 ère secondaire'}> 1 ère secondaire</MenuItem>
+                <MenuItem value={'2 ème secondaire informatique'}>2 ème secondaire informatique</MenuItem>
+                <MenuItem value={'2 ème secondaire scientifique'}>2 ème secondaire scientifique</MenuItem>
+                <MenuItem value={'2 ème secondaire économie'}>2 ème secondaire économie</MenuItem>
+                <MenuItem value={'2 ème secondaire lettres'}>2 ème secondaire lettres</MenuItem>
+                <MenuItem value={'3 ème secondaire économie'}>3 ème secondaire économie</MenuItem>
+                <MenuItem value={'3 ème secondaire informatique'}>3 ème secondaire informatique</MenuItem>
+                <MenuItem value={'3 ème secondaire math'}>3 ème secondaire math</MenuItem>
+                <MenuItem value={'3 ème secondaire sciences exp'}>3 ème secondaire sciences exp</MenuItem>
+                <MenuItem value={'3 ème secondaire techniques'}>3 ème secondaire techniques</MenuItem>
+                <MenuItem value={'3 ème secondaire lettres'}>3 ème secondaire lettres</MenuItem>
+                <MenuItem value={'Bac économie'}>Bac économie</MenuItem>
+                <MenuItem value={'Bac sciences exp'}>Bac sciences exp</MenuItem>
+                <MenuItem value={'Bac informatique'}>Bac informatique</MenuItem>
+                <MenuItem value={'Bac lettres'}>Bac lettres</MenuItem>
+                <MenuItem value={'Bac mathématiques'}>Bac mathématiques</MenuItem>
+                <MenuItem value={'Bac techniques'}>Bac techniques</MenuItem>
+                <MenuItem value={'Formation Langues'}>Formation Langues</MenuItem>
               </Select>
-
             </FormControl>
 
-            {/* <FormControl sx={{ mb: 4, mt: 2, maxWidth: 'xl' }}  >
-              <InputLabel htmlFor="max-width">Theme</InputLabel>
+            <FormControl sx={{ mt: 2, maxWidth: 'xl' }}>
+              <InputLabel htmlFor="max-width">Group ...</InputLabel>
               <Select
                 autoFocus
                 label="maxWidth"
-                value={teme}
-                onChange={handleTheme}
                 inputProps={{
                   name: 'max-width',
                   id: 'max-width',
-                  defaultValue: "theme"
+                  defaultValue: 'group_1',
                 }}
+                value={group}
+                onChange={handleGroup}
               >
-                {themes.map((theme, index) =>
-                  <MenuItem key={index} value={theme.slug}>{theme.name}</MenuItem>
-                )}
-
+                <MenuItem value="true"> group_1 </MenuItem>
+                <MenuItem value="true"> group_2 </MenuItem>
+                <MenuItem value="true"> group_3 </MenuItem>
+                <MenuItem value="true"> group_4 </MenuItem>
+                <MenuItem value="true"> group_5 </MenuItem>
+                <MenuItem value="true"> group_6 </MenuItem>
+                <MenuItem value="true"> group_7 </MenuItem>
+                <MenuItem value="true"> group_8 </MenuItem>
+                <MenuItem value="true"> group_9 </MenuItem>
+                <MenuItem value="true"> group_10 </MenuItem>
+                <MenuItem value="true"> group_pilote_1 </MenuItem>
+                <MenuItem value="true"> group_pilote_2 </MenuItem>
+                <MenuItem value="true"> group_pilote_3 </MenuItem>
+                <MenuItem value="true"> group_pilote_4 </MenuItem>
+                <MenuItem value="true"> group_pilote_5 </MenuItem>
+                <MenuItem value="true"> group_pilote_6 </MenuItem>
+                <MenuItem value="true"> group_pilote_7 </MenuItem>
+                <MenuItem value="true"> group_pilote_8 </MenuItem>
+                <MenuItem value="true"> group_pilote_9 </MenuItem>
+                <MenuItem value="true"> group_pilote_10 </MenuItem>
               </Select>
-            </FormControl> */}
+            </FormControl>
 
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <FormControl fullWidth sx={{ mt: 2, mb: 2, maxWidth: 'xl' }}>
+              <InputLabel id="demo-simple-select-label">subject</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -452,17 +506,15 @@ export default function TeacherCourse() {
                 value={teme}
                 onChange={handleTheme}
               >
-                {themes.map(theme =>
-                  <MenuItem key={theme._id} value={theme._id}>{theme.name}</MenuItem>
-                )}
+                {themes.map((theme) => (
+                  <MenuItem key={theme._id} value={theme._id}>
+                    {theme.level} {'_'} {theme.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
 
-            <FileUpload
-
-              onFilesChange={handleFilesChange}
-              onContextReady={(context) => { }}
-            />
+            <FileUpload onFilesChange={handleFilesChange} onContextReady={(context) => {}} />
           </Box>
         </DialogContent>
         <DialogActions>
@@ -471,7 +523,6 @@ export default function TeacherCourse() {
             Submit
           </Button>
         </DialogActions>
-
       </Dialog>
     </>
   );

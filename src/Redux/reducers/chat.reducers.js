@@ -86,6 +86,13 @@ export default (state = initState, action) => {
         messages: [...state.messages, action.payload],
       };
       break;
+    
+      case chatConstants.RECIEVE_MESSAGE_SUCCESS:
+        state = {
+          ...state,
+          messages: [...state.messages, action.payload],
+        };
+        break;
 
     case chatConstants.GET_MESSAGES_SUCCESS:
       state = {
