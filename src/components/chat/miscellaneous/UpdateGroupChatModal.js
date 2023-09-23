@@ -74,9 +74,11 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   };
   return (
     <>
-      <IconButton color="inherit" sx={{ width: '50px' }} onClick={handleOpenDialog}>
-        <Iconify sx={{ width: '100%', height: '100%' }} icon="eva:eye-fill" />
-      </IconButton>
+      {auth.role === 'teacher' ? (
+        <IconButton color="inherit" sx={{ width: '50px' }} onClick={handleOpenDialog}>
+          <Iconify sx={{ width: '100%', height: '100%' }} icon="eva:eye-fill" />
+        </IconButton>
+      ) : null}
       <Dialog
         fullWidth="true"
         open={opend}

@@ -306,7 +306,7 @@ export default function TeacherCourse() {
                                 src={course.url}
                                 title={course.titre}
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
+                                allowFullScreen
                               />
                             </TableCell>
 
@@ -474,26 +474,26 @@ export default function TeacherCourse() {
                 value={group}
                 onChange={handleGroup}
               >
-                <MenuItem value="true"> group_1 </MenuItem>
-                <MenuItem value="true"> group_2 </MenuItem>
-                <MenuItem value="true"> group_3 </MenuItem>
-                <MenuItem value="true"> group_4 </MenuItem>
-                <MenuItem value="true"> group_5 </MenuItem>
-                <MenuItem value="true"> group_6 </MenuItem>
-                <MenuItem value="true"> group_7 </MenuItem>
-                <MenuItem value="true"> group_8 </MenuItem>
-                <MenuItem value="true"> group_9 </MenuItem>
-                <MenuItem value="true"> group_10 </MenuItem>
-                <MenuItem value="true"> group_pilote_1 </MenuItem>
-                <MenuItem value="true"> group_pilote_2 </MenuItem>
-                <MenuItem value="true"> group_pilote_3 </MenuItem>
-                <MenuItem value="true"> group_pilote_4 </MenuItem>
-                <MenuItem value="true"> group_pilote_5 </MenuItem>
-                <MenuItem value="true"> group_pilote_6 </MenuItem>
-                <MenuItem value="true"> group_pilote_7 </MenuItem>
-                <MenuItem value="true"> group_pilote_8 </MenuItem>
-                <MenuItem value="true"> group_pilote_9 </MenuItem>
-                <MenuItem value="true"> group_pilote_10 </MenuItem>
+                <MenuItem value="group_1"> group_1 </MenuItem>
+                <MenuItem value="group_2"> group_2 </MenuItem>
+                <MenuItem value="group_3"> group_3 </MenuItem>
+                <MenuItem value="group_4"> group_4 </MenuItem>
+                <MenuItem value="group_5"> group_5 </MenuItem>
+                <MenuItem value="group_6"> group_6 </MenuItem>
+                <MenuItem value="group_7"> group_7 </MenuItem>
+                <MenuItem value="group_8"> group_8 </MenuItem>
+                <MenuItem value="group_9"> group_9 </MenuItem>
+                <MenuItem value="group_10"> group_10 </MenuItem>
+                <MenuItem value="group_pilote_1"> group_pilote_1 </MenuItem>
+                <MenuItem value="group_pilote_2"> group_pilote_2 </MenuItem>
+                <MenuItem value="group_pilote_3"> group_pilote_3 </MenuItem>
+                <MenuItem value="group_pilote_4"> group_pilote_4 </MenuItem>
+                <MenuItem value="group_pilote_5"> group_pilote_5 </MenuItem>
+                <MenuItem value="group_pilote_6"> group_pilote_6 </MenuItem>
+                <MenuItem value="group_pilote_7"> group_pilote_7 </MenuItem>
+                <MenuItem value="group_pilote_8"> group_pilote_8 </MenuItem>
+                <MenuItem value="group_pilote_9"> group_pilote_9 </MenuItem>
+                <MenuItem value="group_pilote_10"> group_pilote_10 </MenuItem>
               </Select>
             </FormControl>
 

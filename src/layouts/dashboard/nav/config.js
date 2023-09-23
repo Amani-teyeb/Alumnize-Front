@@ -36,11 +36,11 @@ const navConfig = [
     icon: icon('ic_lock'),
   },
 
-  {
-    title: 'لغات',
-    path: '/dashboard/formation',
-    icon: icon('ic_lock'),
-  },
+  // {
+  //   title: 'لغات',
+  //   path: '/dashboard/formation',
+  //   icon: icon('ic_lock'),
+  // },
 ];
 
 export default navConfig;

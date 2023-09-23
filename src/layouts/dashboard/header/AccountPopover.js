@@ -104,8 +104,8 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          <Link href="/dashboard/app" style={{ textDecoration: 'none' }}>
-            <MenuItem key={'الاستقبال'}>صفحة الاستقبال</MenuItem>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <MenuItem key={'الاستقبال'}>الصفحة الرئيسية</MenuItem>
           </Link>
           {auth && auth.role === 'teacher' ? (
             <EditTeacherModal>
@@ -113,7 +113,13 @@ export default function AccountPopover() {
                 <MenuItem key={'إعدادات'}>إعدادات </MenuItem>
               </Link>
             </EditTeacherModal>
-          ) : null}
+          ) : (
+            <EditUserModal>
+              <Link style={{ textDecoration: 'none' }}>
+                <MenuItem key={'إعدادات'}>إعدادات </MenuItem>
+              </Link>
+            </EditUserModal>
+          )}
         </Stack>
 
         <Divider sx={{ borderStyle: 'dashed' }} />

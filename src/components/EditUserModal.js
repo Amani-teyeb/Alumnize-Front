@@ -15,9 +15,9 @@ import { updateUser } from '../Redux/actions';
 import Iconify from './iconify';
 import account from '../_mock/account';
 
-const EditUserModal = ({ children, user }) => {
+const EditUserModal = ({ children }) => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
   const [opend, setOpend] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
