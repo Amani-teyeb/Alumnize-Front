@@ -45,7 +45,7 @@ import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 
 // mock
 import USERLIST from '../../_mock/user';
-import { AddCourse, deleteCourse, getAllCourses } from '../../Redux/actions';
+import { AddVideoCourse, AddCourse, deleteCourse, getAllCourses } from '../../Redux/actions';
 
 // ----------------------------------------------------------------------
 
@@ -120,6 +120,7 @@ export default function TeacherCourse() {
   const [titre, setTitre] = useState('');
   const [description, setDescription] = useState('');
   const [group, setGroup] = useState('');
+  const [url, setUrl] = useState('');
 
   // .................................................................
   const handleOpenMenu = (event) => {
@@ -152,6 +153,7 @@ export default function TeacherCourse() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value : value._id
     );
+    console.log(group);
   };
 
   const handleClick = (event, name) => {
@@ -196,22 +198,16 @@ export default function TeacherCourse() {
     setOpend(false);
   };
   const handleSubmitDialog = () => {
-    const form = new FormData();
-    form.append('titre', titre);
-    form.append('group', group);
-    form.append('description', description);
-    form.append('level', level);
-    form.append('theme', teme);
-    form.append('url', fileToUpload);
-
-    dispatch(AddCourse(form));
+    const videoCourse = {
+      titre,
+      level,
+      theme: teme,
+      url,
+      group,
+    };
+    dispatch(AddVideoCourse(videoCourse));
     setOpend(false);
   };
-  // const handleFileChange = (event) => {
-  //   // Update chosen files
-  //   setFileToUpload(event.target.file[0])
-  //   console.log(event.target.file)
-  // };
 
   const handleLevel = (event) => {
     const {
@@ -219,9 +215,11 @@ export default function TeacherCourse() {
     } = event;
     setLevel(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value._id
+      typeof value === 'string' ? value : value._id
     );
+    console.log(level);
   };
+
   const handleTheme = (event, theme) => {
     const {
       target: { value },
@@ -230,14 +228,12 @@ export default function TeacherCourse() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
     );
-    console.log(theme.name);
   };
   const handleFilesChange = (file) => {
     // Update chosen files
     setFileToUpload(file[0]);
     console.log(file[0]);
   };
-  const [age, setAge] = useState('');
 
   return (
     <>
@@ -257,112 +253,6 @@ export default function TeacherCourse() {
             </Typography>
           </Button>
         </Stack>
-        <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={courses.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody key={courses._id}>
-                  {courses.length > 0
-                    ? courses.map((course) => {
-                        const selectedUser = selected.indexOf(titre) !== -1;
-
-                        return (
-                          <TableRow hover key={course.titre} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                            <TableCell padding="checkbox">
-                              <Checkbox />
-                            </TableCell>
-
-                            <TableCell component="th" scope="row" padding="none">
-                              <Stack>
-                                <Typography variant="subtitle2" noWrap>
-                                  {course.titre}
-                                </Typography>
-                              </Stack>
-                            </TableCell>
-                            <TableCell align="left">{course.level}</TableCell>
-                            <TableCell align="left">{course.createdAt}</TableCell>
-                            <TableCell align="left">
-                              {/* <iframe
-                                src={course.url}
-                                id={course._id}
-                                title={course.titre}
-                                width="80%"
-                                autoPlay="false"
-                              /> */}
-                              <iframe
-                                width="260"
-                                height="115"
-                                src={course.url}
-                                title={course.titre}
-                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowFullScreen
-                              />
-                            </TableCell>
-
-                            <TableCell align="right">
-                              <IconButton size="large" onClick={() => dispatch(deleteCourse({ courseId: course._id }))}>
-                                <Iconify icon={'eva:trash-2-outline'} sx={{ color: 'error.main' }} />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })
-                    : null}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <Paper
-                          sx={{
-                            textAlign: 'center',
-                          }}
-                        >
-                          <Typography variant="h6" paragraph>
-                            Not found
-                          </Typography>
-
-                          <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
-                          </Typography>
-                        </Paper>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
       </Container>
 
       <Popover
@@ -419,47 +309,7 @@ export default function TeacherCourse() {
               value={titre}
               onChange={(e) => setTitre(e.target.value)}
             />
-            <FormControl sx={{ mt: 2, maxWidth: 'xl' }}>
-              <InputLabel htmlFor="max-width">level</InputLabel>
-              <Select
-                autoFocus
-                label="maxWidth"
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                  defaultValue: 'level',
-                }}
-                value={level}
-                onChange={handleLevel}
-              >
-                <MenuItem value={'2 ème année'}>2 ème année</MenuItem>
-                <MenuItem value={'3 ème année'}>3 ème année</MenuItem>
-                <MenuItem value={'4 ème année'}>4 ème année</MenuItem>
-                <MenuItem value={'5 ème année'}>5 ème année</MenuItem>
-                <MenuItem value={'6 ème année'}>6 ème année</MenuItem>
-                <MenuItem value={'7 ème année'}>7 ème année</MenuItem>
-                <MenuItem value={'8 ème année'}>8 ème année</MenuItem>
-                <MenuItem value={'9 ème année'}>9 ème année</MenuItem>
-                <MenuItem value={'1 ère secondaire'}> 1 ère secondaire</MenuItem>
-                <MenuItem value={'2 ème secondaire informatique'}>2 ème secondaire informatique</MenuItem>
-                <MenuItem value={'2 ème secondaire scientifique'}>2 ème secondaire scientifique</MenuItem>
-                <MenuItem value={'2 ème secondaire économie'}>2 ème secondaire économie</MenuItem>
-                <MenuItem value={'2 ème secondaire lettres'}>2 ème secondaire lettres</MenuItem>
-                <MenuItem value={'3 ème secondaire économie'}>3 ème secondaire économie</MenuItem>
-                <MenuItem value={'3 ème secondaire informatique'}>3 ème secondaire informatique</MenuItem>
-                <MenuItem value={'3 ème secondaire math'}>3 ème secondaire math</MenuItem>
-                <MenuItem value={'3 ème secondaire sciences exp'}>3 ème secondaire sciences exp</MenuItem>
-                <MenuItem value={'3 ème secondaire techniques'}>3 ème secondaire techniques</MenuItem>
-                <MenuItem value={'3 ème secondaire lettres'}>3 ème secondaire lettres</MenuItem>
-                <MenuItem value={'Bac économie'}>Bac économie</MenuItem>
-                <MenuItem value={'Bac sciences exp'}>Bac sciences exp</MenuItem>
-                <MenuItem value={'Bac informatique'}>Bac informatique</MenuItem>
-                <MenuItem value={'Bac lettres'}>Bac lettres</MenuItem>
-                <MenuItem value={'Bac mathématiques'}>Bac mathématiques</MenuItem>
-                <MenuItem value={'Bac techniques'}>Bac techniques</MenuItem>
-                <MenuItem value={'Formation Langues'}>Formation Langues</MenuItem>
-              </Select>
-            </FormControl>
+
             <FormControl sx={{ mt: 2, maxWidth: 'xl' }}>
               <InputLabel htmlFor="max-width">group</InputLabel>
               <Select
@@ -505,6 +355,47 @@ export default function TeacherCourse() {
                   id: 'max-width',
                   defaultValue: 'level',
                 }}
+                value={level}
+                onChange={handleLevel}
+              >
+                <MenuItem value={'2 ème année'}>2 ème année</MenuItem>
+                <MenuItem value={'3 ème année'}>3 ème année</MenuItem>
+                <MenuItem value={'4 ème année'}>4 ème année</MenuItem>
+                <MenuItem value={'5 ème année'}>5 ème année</MenuItem>
+                <MenuItem value={'6 ème année'}>6 ème année</MenuItem>
+                <MenuItem value={'7 ème année'}>7 ème année</MenuItem>
+                <MenuItem value={'8 ème année'}>8 ème année</MenuItem>
+                <MenuItem value={'9 ème année'}>9 ème année</MenuItem>
+                <MenuItem value={'1 ère secondaire'}> 1 ère secondaire</MenuItem>
+                <MenuItem value={'2 ème secondaire informatique'}>2 ème secondaire informatique</MenuItem>
+                <MenuItem value={'2 ème secondaire scientifique'}>2 ème secondaire scientifique</MenuItem>
+                <MenuItem value={'2 ème secondaire économie'}>2 ème secondaire économie</MenuItem>
+                <MenuItem value={'2 ème secondaire lettres'}>2 ème secondaire lettres</MenuItem>
+                <MenuItem value={'3 ème secondaire économie'}>3 ème secondaire économie</MenuItem>
+                <MenuItem value={'3 ème secondaire informatique'}>3 ème secondaire informatique</MenuItem>
+                <MenuItem value={'3 ème secondaire math'}>3 ème secondaire math</MenuItem>
+                <MenuItem value={'3 ème secondaire sciences exp'}>3 ème secondaire sciences exp</MenuItem>
+                <MenuItem value={'3 ème secondaire techniques'}>3 ème secondaire techniques</MenuItem>
+                <MenuItem value={'3 ème secondaire lettres'}>3 ème secondaire lettres</MenuItem>
+                <MenuItem value={'Bac économie'}>Bac économie</MenuItem>
+                <MenuItem value={'Bac sciences exp'}>Bac sciences exp</MenuItem>
+                <MenuItem value={'Bac informatique'}>Bac informatique</MenuItem>
+                <MenuItem value={'Bac lettres'}>Bac lettres</MenuItem>
+                <MenuItem value={'Bac mathématiques'}>Bac mathématiques</MenuItem>
+                <MenuItem value={'Bac techniques'}>Bac techniques</MenuItem>
+                <MenuItem value={'Formation Langues'}>Formation Langues</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ mt: 2, maxWidth: 'xl' }}>
+              <InputLabel htmlFor="max-width">theme</InputLabel>
+              <Select
+                autoFocus
+                label="maxWidth"
+                inputProps={{
+                  name: 'max-width',
+                  id: 'max-width',
+                  defaultValue: 'theme',
+                }}
                 value={teme}
                 onChange={handleTheme}
               >
@@ -515,7 +406,13 @@ export default function TeacherCourse() {
                 ))}
               </Select>
             </FormControl>
-            <FileUpload onFilesChange={handleFilesChange} onContextReady={(context) => {}} />
+            <TextField
+              id="filled-basic"
+              label="url"
+              variant="filled"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
           </Box>
         </DialogContent>
         <DialogActions>

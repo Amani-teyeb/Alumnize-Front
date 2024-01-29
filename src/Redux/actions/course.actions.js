@@ -33,6 +33,22 @@ export const AddCourse = (form) => {
     }
   };
 };
+export const AddVideoCourse = (videoCourse) => {
+  return async (dispatch) => {
+    dispatch({ type: courseConstants.ADD_VCOURSE_REQUEST });
+    const res = await axiosInstance.post(`/coursevideo/create`, { ...videoCourse });
+
+    if (res.status === 201) {
+      dispatch({
+        type: courseConstants.ADD_VCOURSE_SUCCESS,
+        payload: res.data,
+      });
+      // dispatch(getAllCourses());
+    } else {
+      dispatch({ type: courseConstants.ADD_VCOURSE_FAILURE });
+    }
+  };
+};
 
 export const getCourseBySlug = (slug) => {
   return async (dispatch) => {

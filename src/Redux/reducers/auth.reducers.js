@@ -9,6 +9,7 @@ const initState = {
     picture: '',
   },
   wishlist: [],
+  images: [],
   authenticate: false,
   authenticating: false,
   loading: false,
@@ -93,6 +94,16 @@ export default (state = initState, action) => {
       break;
 
     case authConstants.UPDATE_USER_FAILURE:
+      break;
+    case authConstants.GET_IMAGES_REQUEST:
+      break;
+    case authConstants.GET_IMAGES_SUCCESS:
+      state = {
+        ...state,
+        images: action.payload.images,
+      };
+      break;
+    case authConstants.GET_IMAGES_FAILURE:
       break;
 
     default:

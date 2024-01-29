@@ -147,3 +147,19 @@ export const updateUser = (theuser) => {
     }
   };
 };
+
+export const getImages = () => {
+  return async (dispatch) => {
+    dispatch({ type: authConstants.GET_IMAGES_REQUEST });
+    const res = await axiosInstance.get(`/homepic`);
+
+    if (res.status === 200) {
+      dispatch({
+        type: authConstants.GET_IMAGES_SUCCESS,
+        payload: res.data,
+      });
+    } else {
+      dispatch({ type: authConstants.GET_IMAGES_FAILURE });
+    }
+  };
+};

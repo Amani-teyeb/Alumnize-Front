@@ -18,10 +18,14 @@ const navConfigTeacher = [
     path: '/dashboard/user',
     icon: icon('ic_user'),
   },
-
+  {
+    title: ' اضافة وثائق',
+    path: '/dashboard/cours',
+    icon: icon('ic_lock'),
+  },
   {
     title: ' اضافة درس',
-    path: '/dashboard/cours',
+    path: '/dashboard/videoCourse',
     icon: icon('ic_blog'),
   },
 

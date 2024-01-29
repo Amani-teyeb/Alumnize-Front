@@ -2,6 +2,7 @@ import { courseConstants, favConstants } from '../actions/constants';
 
 const initState = {
   courses: [],
+  vcourses: [],
   courseDetails: {},
   error: null,
   loading: false,

@@ -18,7 +18,7 @@ function Index() {
       <ProductHowItWorks />
       <ProductCTA />
       <ProductSmokingHero />
-      <AppFooter />
+      {/* <AppFooter /> */}
     </>
   );
 }

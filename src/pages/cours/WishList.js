@@ -50,6 +50,7 @@ export default function WishList() {
   const [opend, setOpend] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
   const [fileToUpload, setFileToUpload] = useState();
+
   const [payPeriode, setPayPeriode] = useState('');
 
   useEffect(() => {

@@ -16,6 +16,9 @@ import PrivateRoute from './HOC/PrivateRoutes';
 import { CoursePage } from './pages/cours/CoursePage';
 import { CourseDetails } from './pages/cours/CourseDetails';
 import WishList from './pages/cours/WishList';
+import EmploiPage from './pages/EmploiPage';
+import PrixPage from './pages/PrixPage';
+import VideoCourse from './pages/cours/videoCourse';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +28,14 @@ export default function Router() {
       path: '/',
       element: <Home />,
       index: true,
+    },
+    {
+      path: 'emploi',
+      element: <EmploiPage />,
+    },
+    {
+      path: 'prix',
+      element: <PrixPage />,
     },
     {
       element: <PrivateRoute />,
@@ -37,6 +48,7 @@ export default function Router() {
             { path: 'app', element: <DashboardAppPage /> },
             { path: 'user', element: <UserPage /> },
             { path: 'cours', element: <Cours /> },
+            { path: 'videoCourse', element: <VideoCourse /> },
             { path: 'formation', element: <Formation /> },
             { path: 'blog', element: <BlogPage /> },
             { path: 'wishlist', element: <WishList /> },
