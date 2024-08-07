@@ -44,7 +44,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> chat page </title>
       </Helmet>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -64,8 +64,8 @@ export default function UserPage() {
               backgroundColor: '#f0f8ff',
             }}
           >
-            {auth && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
             {auth && <MyChats fetchAgain={fetchAgain} />}
+            {auth && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
           </Box>
         </div>
       </Container>

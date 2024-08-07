@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Outlet,  useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 // import { Logout } from '../../Redux/actions';
 //
 import Header from './header';
 import Nav from './nav';
-
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +35,7 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // useEffect(() =>{
   //   if(!localStorage.getItem('token')){

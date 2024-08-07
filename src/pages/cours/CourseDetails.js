@@ -9,16 +9,20 @@ import Typography from '../intro/modules/components/Typography';
 export const CourseDetails = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const auth = useSelector((state) => state.auth.user);
+  const auth = useSelector((state) => state.auth);
   const courses = useSelector((state) => state.course.courses);
   const course = courses.find((c) => c._id === id);
   useEffect(() => {
     dispatch(getAllCourses());
+    console.log(auth);
   }, []);
 
   return (
     <Container>
-      {auth && auth.verified === true ? (
+      <Stack direction="col" backgoundColor="secondary.main" alignItems="center" justifyContent="space-arround" pl={16}>
+        <iframe src={course && course.url} title={course && course.titre} height="600px" width="900px" />
+      </Stack>
+      {/* {auth && auth.verified === true ? (
         <Stack
           direction="col"
           backgoundColor="secondary.main"
@@ -30,12 +34,14 @@ export const CourseDetails = (props) => {
         </Stack>
       ) : (
         <Container maxWidth="sm">
-          <CssBaseline />
-          <Box sx={{ bgcolor: '#cfe8fc', height: '50vh' }}>
-            <Typography> الرجاء دفع معلوم الاشتراك او الاتصال بالادارة</Typography>
+          <Box sx={{ bgcolor: 'red', height: '20vh', alignContent: 'center' }}>
+            <Typography variant="h4" sx={{ marginLeft: '100px' }}>
+              {' '}
+              الرجاء دفع معلوم الاشتراك او الاتصال بالادارة
+            </Typography>
           </Box>
         </Container>
-      )}
+      )} */}
     </Container>
   );
 };

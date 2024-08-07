@@ -13,6 +13,7 @@ import {
   Button,
   Popover,
   Box,
+  Grid,
   Checkbox,
   TableRow,
   MenuItem,
@@ -45,7 +46,8 @@ import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 
 // mock
 import USERLIST from '../../_mock/user';
-import { AddVideoCourse, AddCourse, deleteCourse, getAllCourses } from '../../Redux/actions';
+import { AddVideoCourse, getThemes, getUserWishlist, getVideoCourses, getAllCourses } from '../../Redux/actions';
+import VcourseCard from './VcourseCard';
 
 // ----------------------------------------------------------------------
 
@@ -90,9 +92,11 @@ function applySortFilter(array, comparator, query) {
 
 export default function TeacherCourse() {
   const dispatch = useDispatch();
-  const allcourses = useSelector((state) => state.course.courses);
+  // const allcourses = useSelector((state) => state.course.courses);
   const auth = useSelector((state) => state.auth.user);
-  const courses = allcourses.filter((e) => e.createdBy === auth._id);
+  // const courses = allcourses.filter((e) => e.createdBy === auth._id);
+  const vcourses = useSelector((state) => state.course.vcourses);
+  const courses = vcourses.filter((e) => e.createdBy === auth._id);
   console.log(courses);
   const themes = useSelector((state) => state.theme.themes);
 
@@ -235,6 +239,13 @@ export default function TeacherCourse() {
     console.log(file[0]);
   };
 
+  useEffect(() => {
+    dispatch(getThemes());
+    dispatch(getAllCourses());
+    dispatch(getUserWishlist());
+    dispatch(getVideoCourses());
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -246,13 +257,16 @@ export default function TeacherCourse() {
           <Typography variant="h4" gutterBottom>
             الدروس
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenDialog}>
+          <Button variant="contained" endIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenDialog}>
             {/* <span style={{ fontSize: 'h4' }}>اضافة درس</span> */}
-            <Typography variant="h5" gutterBottom>
+            <Typography sx={{ ml: 1.5 }} variant="h6" gutterBottom>
               اضافة درس
             </Typography>
           </Button>
         </Stack>
+        <Grid container spacing={4}>
+          {courses && courses.map((course, index) => <VcourseCard key={course._id} course={course} index={index} />)}
+        </Grid>
       </Container>
 
       <Popover

@@ -250,9 +250,9 @@ export default function TeacherCourse() {
           <Typography variant="h4" gutterBottom>
             الدروس
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenDialog}>
+          <Button variant="contained" endIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpenDialog}>
             {/* <span style={{ fontSize: 'h4' }}>اضافة درس</span> */}
-            <Typography variant="h5" gutterBottom>
+            <Typography sx={{ ml: 1.5 }} variant="h6" gutterBottom>
               اضافة درس
             </Typography>
           </Button>

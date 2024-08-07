@@ -55,7 +55,7 @@ const MyChats = ({ fetchAgain }) => {
           marginBottom: 2,
         }}
       >
-        {auth && auth.role === 'teacher' ? (
+        {/* {auth && auth.role === 'teacher' ? (
           <GroupChatModal>
             <Button
               variant="outlined"
@@ -66,7 +66,7 @@ const MyChats = ({ fetchAgain }) => {
               <Typography variant="h6"> اضافة مجموعة جديدة</Typography>
             </Button>
           </GroupChatModal>
-        ) : null}
+        ) : null} */}
       </Box>
       <Box
         sx={{

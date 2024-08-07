@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, Checkbox, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
@@ -40,8 +40,13 @@ export default function LoginForm() {
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+              // <Grid container justify="flex-end" alignItems="flex-end">
+              //   <IconButton style={{ bottom: 3, left: -100 }} onClick={() => setShowPassword(!showPassword)}>
+              //     <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+              //   </IconButton>
+              // </Grid>
+              <InputAdornment position="beginning">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="beginning">
                   <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>

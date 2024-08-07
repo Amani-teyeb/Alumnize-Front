@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Toolbar from '../components/Toolbar';
 import AppBar from '../components/AppBar';
-import logo from './logo.jpg';
+import logo from './logo.png';
 
 const rightLink = {
   fontSize: 16,

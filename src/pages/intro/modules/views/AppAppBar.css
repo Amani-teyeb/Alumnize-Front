@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, "poppins", ;
+}
+
+.body {
+    background: #eaeaea;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 4%;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+
+}
+
+.header img {
+    height: 80px;
+    width: 80px;
+    margin-left: 120px ;
+}
+
+.navbar a {
+    font-size: 25px;
+    color: #1b3c96;
+    text-decoration: none;
+    font-weight: 400;
+    margin: 0 25px;
+    position: relative;
+    right: -300px;
+    transition: .3s;
+}
+
+.navbar a :hover,
+.navbar a.active {
+    color: rgb(138, 57, 57)
+}
+
+.social-media {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    height: 40px;
+    position: relative;
+    left: -40px;
+
+}
+.home {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 8% 0;
+    overflow: hidden;
+}
+
+.home-content {
+
+    max-width: 700px;
+    padding-top: 60px;
+    margin-right: -60px;
+}
+
+.home-content h1 {
+    font-size: 50px;
+    line-height: 1.2;
+    padding-bottom: 30px;
+    padding-right: 40px;
+    opacity: 0;
+    animation: slideBottom 1s ease forwards;
+   animation-delay: 1s;
+    
+}
+
+.home-content h3 {
+    font-size: 25px;
+    color: #1743e3;
+    padding-bottom: 20px;
+    background: rgb(247, 247, 177);
+    border-radius: 12px;
+    padding-right: 20px;
+    opacity: 0;
+    animation: slideRight 1s ease forwards;
+    animation-delay: 1.3s;
+}
+
+.home-content p {
+    /* padding-right: 20px; */
+    font-size: 20px;
+    /* background: rgb(177, 243, 245); */
+    margin: 15px 0 30px;
+    line-height: 50px;
+    border-radius: 12px;
+    opacity: 0;
+    animation: slideLeft 1s ease forwards;
+    animation-delay: 1.6s;
+}
+
+.header .social-media img {
+    width: 120px;
+    height: 60px;
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 40px;
+    color: #fff;
+    background-image: linear-gradient(45deg, #e891f3, #2f99f0);
+    font-size: 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: .5s;
+    opacity: 0;
+    animation: slideTop 1s ease forwards;
+    animation-delay: 2s;
+        
+    /* display: inline-block;
+    padding: 10px 28px;
+    background: #1743e3;
+    border: 2px solid #1743e3;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    font-size: 16px;
+    color: #eaeaea;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 600; */
+}
+
+.btn:hover {
+    background: transparent;
+    border:2px solid #1743e3;
+    color: #1743e3;
+}
+
+.home-img {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    transform: rotate(45deg);
+    left: -7%;
+}
+
+.home-img .rhombus1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #eaeaea;
+    border: 25px solid #1743e3; 
+    /* left: -350px; */
+    
+}
+
+.home .rhombus {
+    position: absolute; 
+    top: -150px;
+    left: -150px;  
+    height: 500px; 
+    width: 1000px;
+    transform: rotate(-45deg);
+    
+    
+}
+
+.home .rhombus2 {
+    position: absolute;
+    top: -20%;
+    left: -100%;
+    width: 700px;
+    height: 700px;
+    background: #1743e3;
+    /* transform: rotate(45deg); */
+    z-index: -1;
+}
+
+@keyframes slideRight {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+@keyframes slideLeft {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes slideTop {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes slideBottom {
+    0%{
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+        }
+}
+
+@media (max-width: 1050px) {
+    .header img{
+        width: 140px;
+    }
+    .navbar{
+        gap : 20px;
+        font-size: 17px;
+    }
+    
+}
+
+

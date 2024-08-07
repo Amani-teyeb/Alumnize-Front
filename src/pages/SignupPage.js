@@ -19,7 +19,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 const StyledSection = styled('div')(({ theme }) => ({
   width: '100%',
-  maxWidth: 480,
+  maxWidth: 550,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -44,7 +44,7 @@ export default function SignupPage() {
     <>
       <StyledRoot>
         <StyledSection>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5, mr: 15 }}>
             Hi, Welcome
           </Typography>
           <img src="/assets/illustrations/illustration_login.png" alt="login" />

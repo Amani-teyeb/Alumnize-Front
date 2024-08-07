@@ -37,6 +37,16 @@ export default (state = initState, action) => {
       break;
     case courseConstants.DELETE_COURSE_FAILURE:
       break;
+    case courseConstants.GET_VCOURSES_REQUEST:
+      break;
+    case courseConstants.GET_VCOURSES_SUCCESS:
+      state = {
+        ...state,
+        vcourses: action.payload.vcourses,
+      };
+      break;
+    case courseConstants.GET_VCOURSES_FAILURE:
+      break;
     default:
       return state;
   }

@@ -54,7 +54,7 @@ export default function Nav({ openNav, onCloseNav }) {
     <Scrollbar
       sx={{
         height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
+        '& .simplebar-content': { height: 2, display: 'flex', flexDirection: 'column' },
       }}
     >
       <Box sx={{ px: 2.5, py: 5, display: 'inline-flex' }} />
@@ -64,7 +64,7 @@ export default function Nav({ openNav, onCloseNav }) {
           <StyledAccount>
             <Avatar src={account.photoURL} alt="photoURL" />
 
-            <Box sx={{ ml: 2 }}>
+            <Box sx={{ mr: 4 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                 {user.fullName}
               </Typography>

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // mock
 import courses from '../../_mock/course';
-import { getAllCourses, getThemes, getUserWishlist } from '../../Redux/actions';
+import { getAllCourses, getThemes, getUserWishlist, getVideoCourses } from '../../Redux/actions';
 import CourseCard from './CourseCard';
 import TeacherCourse from './TeacherCourse';
 
@@ -36,6 +36,7 @@ export default function Courses() {
     dispatch(getThemes());
     dispatch(getAllCourses());
     dispatch(getUserWishlist());
+    dispatch(getVideoCourses());
   }, []);
 
   return (

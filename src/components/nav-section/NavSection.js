@@ -37,7 +37,7 @@ function NavItem({ item }) {
       component={RouterLink}
       to={path}
       sx={{
-        fontSize: 25,
+        fontSize: 22,
         '&.active': {
           color: 'text.primary',
           bgcolor: 'action.selected',
@@ -45,9 +45,8 @@ function NavItem({ item }) {
         },
       }}
     >
-      <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
-
       <ListItemText disableTypography primary={title} />
+      <StyledNavItemIcon>{icon && icon}</StyledNavItemIcon>
 
       {info && info}
     </StyledNavItem>

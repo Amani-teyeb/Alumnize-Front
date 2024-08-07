@@ -45,8 +45,10 @@ const SideDrawer = () => {
     <Box>
       {auth && auth.role === 'teacher' ? (
         <Tooltip title="Search Users to Chat" placement="left-end">
-          <Button variant="contained" startIcon={<SearchIcon />} onClick={handleOpenDialog}>
-            <Typography variant="h6">اضافة تلميذ</Typography>
+          <Button variant="contained" endIcon={<SearchIcon />} onClick={handleOpenDialog}>
+            <Typography variant="h6" sx={{ ml: 1.5 }}>
+              اضافة تلميذ
+            </Typography>
           </Button>
         </Tooltip>
       ) : null}

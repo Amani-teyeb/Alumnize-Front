@@ -41,9 +41,11 @@ const GroupChatModal = ({ children }) => {
     }
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
+
   const handleDelete = (delUser) => {
-    setSelectedUsers(selectedUsers.filter((sel) => sel._id === !delUser._id));
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
+
   return (
     <>
       <span role="button" tabIndex={0} onClick={handleOpenDialog} onKeyDown={handleOpenDialog}>
@@ -97,17 +99,27 @@ const GroupChatModal = ({ children }) => {
               />
             </Box>
             <Box marginBottom={2}>
-              <TextField
+              <Box
+                noValidate
+                component="form"
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  m: 'auto',
+                  pb: 2,
                 }}
-                id="outlined-basic"
-                label="Add Friend"
-                variant="outlined"
-                value={search}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
+              >
+                <Input
+                  placeholder="Search by name or email"
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    mr: '2',
+                  }}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <Button onClick={handleSearch}>Go</Button>
+              </Box>
               {/* <Button onClick={handleSearch}>Search</Button> */}
             </Box>
             <Box w="100%" display="flex" flexWrap="wrap">
@@ -115,10 +127,9 @@ const GroupChatModal = ({ children }) => {
                 <UserBadgeItem key={u._id} user={u} handleFunction={() => handleDelete(u)} />
               ))}
             </Box>
-            {friends &&
-              friends
-                .slice(0, 4)
-                .map((user) => <UserListItem key={user._id} user={user} handleFunction={() => handleGroup(user)} />)}
+            {friends?.map((user) => (
+              <UserListItem key={user._id} user={user} handleFunction={() => handleGroup(user)} />
+            ))}
           </Box>
         </DialogContent>
         <DialogActions>

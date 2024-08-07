@@ -54,8 +54,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
     }
     dispatch(addUserToGroup({ userId, selectchatId }));
   };
-  const handleRemoveUser = (userId) => {
+  const handleRemoveUser = (u) => {
     const selectchatId = selectedChat._id;
+    const userId = u._id;
     dispatch(removeUserFromGroup({ userId, selectchatId }));
   };
 
@@ -120,8 +121,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
                 <UserBadgeItem
                   key={u._id}
                   user={u}
-                  handleFunction={(u) => {
-                    handleRemoveUser(u._id);
+                  handleFunction={() => {
+                    handleRemoveUser(u);
                   }}
                 />
               ))}
@@ -151,23 +152,33 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
               </Button>
             </Box>
             <Box marginBottom={2}>
-              <TextField
-                id="outlined-controlled"
+              <Box
+                noValidate
+                component="form"
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  m: 'auto',
+                  pb: 2,
                 }}
-                label="Add Friend"
-                variant="outlined"
-                value={search}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
+              >
+                <Input
+                  placeholder="Search by name or email"
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    mr: '2',
+                  }}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <Button onClick={handleSearch}>Go</Button>
+              </Box>
+              {/* <Button onClick={handleSearch}>Search</Button> */}
             </Box>
 
-            {friends &&
-              friends
-                .slice(0, 4)
-                .map((user) => <UserListItem key={user._id} user={user} handleFunction={() => handleAddUser(user)} />)}
+            {friends?.map((user) => (
+              <UserListItem key={user._id} user={user} handleFunction={() => handleGroup(user)} />
+            ))}
           </Box>
         </DialogContent>
         <DialogActions>

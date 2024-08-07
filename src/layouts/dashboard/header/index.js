@@ -44,19 +44,6 @@ export default function Header({ onOpenNav }) {
   return (
     <StyledRoot>
       <StyledToolbar>
-        <IconButton
-          onClick={onOpenNav}
-          sx={{
-            mr: 1,
-            color: 'text.primary',
-            display: { lg: 'none' },
-          }}
-        >
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton>
-
-        <Box sx={{ flexGrow: 1 }} />
-
         <Stack
           direction="row"
           alignItems="center"
@@ -67,6 +54,18 @@ export default function Header({ onOpenNav }) {
         >
           <AccountPopover />
         </Stack>
+        {/* <IconButton
+          onClick={onOpenNav}
+          sx={{
+            ml: 1,
+            color: 'text.primary',
+            display: { lg: 'none' },
+          }}
+        >
+          <Iconify icon="eva:menu-2-fill" />
+        </IconButton> */}
+
+        <Box sx={{ flexGrow: 1 }} />
       </StyledToolbar>
     </StyledRoot>
   );
